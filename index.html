@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tooba Iqbal — AI Engineer in Training</title>
+<meta name="description" content="Portfolio of Tooba Iqbal — final-year BS AI student building working AI systems from first principles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12213B;
+    --ink-soft: #24395C;
+    --paper: #F1E9D8;
+    --paper-dim: #E7DCC4;
+    --cream-text: #EDE7D9;
+    --amber: #E7A93C;
+    --sage: #7FA98B;
+    --line: rgba(237, 231, 217, 0.16);
+    --max: 920px;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Newsreader', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--cream-text);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--amber); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+  /* Notebook spine — runs the full page on the left, as a structural motif */
+  .spine {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 1px;
+    background: var(--line);
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .spine { display: block; left: calc(50% - 460px + 0px); }
+  }
+
+  header.top {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(18, 33, 59, 0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  header.top .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: var(--mono); font-size: 14px; letter-spacing: 0.02em;
+    color: var(--cream-text); text-decoration: none;
+  }
+  .logo b { color: var(--amber); }
+  nav.primary { display: none; gap: 28px; }
+  nav.primary a {
+    font-family: var(--mono); font-size: 13px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--cream-text); text-decoration: none;
+    opacity: 0.75; transition: opacity 0.2s;
+  }
+  nav.primary a:hover { opacity: 1; color: var(--amber); }
+  @media (min-width: 720px) { nav.primary { display: flex; } }
+
+  /* Hero */
+  .hero { padding: 76px 0 40px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--sage); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--sage); display: inline-block;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(38px, 7vw, 68px); line-height: 1.02;
+    letter-spacing: -0.01em; color: var(--cream-text);
+  }
+  .hero-sub {
+    font-family: var(--body); font-style: italic; font-weight: 400;
+    font-size: clamp(18px, 2.4vw, 22px); color: var(--paper);
+    max-width: 640px; margin-top: 18px;
+  }
+  .hero-lede {
+    margin-top: 22px; max-width: 560px; color: var(--cream-text);
+    opacity: 0.82; font-size: 17px;
+  }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .btn {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;
+    text-decoration: none; padding: 12px 20px; border-radius: 2px;
+    display: inline-block; transition: transform 0.15s, background 0.15s;
+  }
+  .btn.solid { background: var(--amber); color: var(--ink); font-weight: 600; }
+  .btn.solid:hover { background: #f0b957; transform: translateY(-1px); }
+  .btn.ghost { border: 1px solid var(--line); color: var(--cream-text); }
+  .btn.ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* Currently exploring ticker — signature element */
+  .ticker-wrap {
+    margin-top: 52px; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line);
+    padding: 14px 0; overflow: hidden; position: relative;
+  }
+  .ticker-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 8px;
+  }
+  .ticker-track {
+    display: flex; gap: 36px; white-space: nowrap;
+    animation: scroll-left 26s linear infinite;
+    width: max-content;
+  }
+  .ticker-track span {
+    font-family: var(--mono); font-size: 14px; color: var(--cream-text); opacity: 0.85;
+  }
+  .ticker-track span::after { content: "·"; color: var(--amber); margin-left: 36px; }
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Sections */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .section-head {
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 34px;
+  }
+  .section-tag {
+    font-family: var(--mono); font-size: 12px; color: var(--amber);
+    border: 1px solid var(--amber); padding: 3px 8px; border-radius: 2px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: clamp(24px, 3.4vw, 32px);
+    color: var(--cream-text);
+  }
+
+  .prose { max-width: 640px; font-size: 18px; color: var(--paper); }
+  .prose p + p { margin-top: 16px; }
+
+  /* How I Work */
+  .principles { display: grid; gap: 22px; margin-top: 8px; }
+  @media (min-width: 640px) { .principles { grid-template-columns: 1fr 1fr; } }
+  .principle {
+    border: 1px solid var(--line); padding: 20px 22px; border-radius: 3px;
+    background: rgba(241, 233, 216, 0.03);
+  }
+  .principle .num {
+    font-family: var(--mono); font-size: 12px; color: var(--sage); display: block; margin-bottom: 10px;
+  }
+  .principle h3 {
+    font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--cream-text); margin-bottom: 8px;
+  }
+  .principle p { font-size: 15.5px; color: var(--paper); opacity: 0.85; }
+
+  /* Skills */
+  .skill-groups { display: grid; gap: 22px; }
+  @media (min-width: 640px) { .skill-groups { grid-template-columns: repeat(3, 1fr); } }
+  .skill-group h4 {
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--sage); margin-bottom: 10px;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 13px; color: var(--cream-text);
+    border: 1px solid var(--line); padding: 5px 10px; border-radius: 2px;
+  }
+
+  /* Projects — index cards */
+  .cards { display: grid; gap: 20px; }
+  .card {
+    background: var(--paper); color: var(--ink); border-radius: 4px;
+    padding: 26px 26px 22px; position: relative;
+    border-top: 3px dashed var(--paper-dim);
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+  .card h3 { font-family: var(--display); font-size: 21px; font-weight: 700; }
+  .card .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); opacity: 0.7; margin-top: 4px; }
+  .status {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 4px 9px; border-radius: 2px; white-space: nowrap; font-weight: 600;
+  }
+  .status.shipped { background: var(--sage); color: #12241a; }
+  .status.progress { background: var(--amber); color: var(--ink); }
+  .status.todo { background: transparent; border: 1px dashed var(--ink-soft); color: var(--ink-soft); }
+  .card p.desc { margin-top: 14px; font-size: 15.5px; line-height: 1.55; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .tag { font-family: var(--mono); font-size: 11.5px; background: var(--paper-dim); padding: 4px 9px; border-radius: 2px; }
+  .card .placeholder-note {
+    margin-top: 14px; font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
+    border-left: 2px solid var(--amber); padding-left: 10px;
+  }
+
+  /* Certifications */
+  .cert-list { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .cert-list { grid-template-columns: 1fr 1fr; } }
+  .cert {
+    display: flex; gap: 12px; align-items: baseline;
+    border-bottom: 1px solid var(--line); padding-bottom: 10px;
+  }
+  .cert .mark { font-family: var(--mono); color: var(--amber); font-size: 14px; }
+  .cert .txt { font-size: 15px; color: var(--cream-text); opacity: 0.9; }
+  .cert .txt small { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--sage); margin-top: 2px; }
+
+  /* Contact / footer */
+  footer { padding: 60px 0 40px; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 20px; }
+  .contact-row a { font-family: var(--mono); font-size: 14px; text-decoration: none; opacity: 0.9; }
+  .contact-row a:hover { text-decoration: underline; }
+  .fine { margin-top: 44px; font-family: var(--mono); font-size: 12px; color: var(--paper); opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<div class="spine" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">tooba<b>.</b>iqbal</a>
+    <nav class="primary" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#work">How I Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <p class="eyebrow">Open to entry-level AI engineering roles</p>
+    <h1>Tooba Iqbal</h1>
+    <p class="hero-sub">I turn ambiguous problems into working systems.</p>
+    <p class="hero-lede">Final-year BS Information Technology (AI Track) student, University of Haripur. I build AI tools from first principles — ANN and Decision Tree models, an NLP translation app, and whatever the next gap in my understanding turns out to be.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="#projects">See my projects</a>
+      <a class="btn ghost" href="resume.pdf">Download résumé</a>
+      <a class="btn ghost" href="mailto:itooba389@gmail.com">Email me</a>
+    </div>
+
+    <div class="ticker-wrap" role="note" aria-label="Currently exploring">
+      <p class="ticker-label">Currently exploring</p>
+      <div class="ticker-track">
+        <span>OpenAI API</span><span>OpenAI Responses API</span><span>Cloud Computing (AWS)</span>
+        <span>Natural Language Processing</span><span>AI Ethics</span><span>AI for Healthcare</span>
+        <span>OpenAI API</span><span>OpenAI Responses API</span><span>Cloud Computing (AWS)</span>
+        <span>Natural Language Processing</span><span>AI Ethics</span><span>AI for Healthcare</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">01</span><h2>About</h2></div>
+      <div class="prose">
+        <p>I learn by building, not by memorizing slides. Every project on this page started as a gap in my own understanding — I didn't know how translation APIs worked end to end, so I built one, from folder structure to UI to version control.</p>
+        <p>I work independently by habit, not just by circumstance: designing, testing, and iterating on models without formal supervision, and closing knowledge gaps through deliberate, self-directed research. I hold myself to one standard — finish it, and understand it well enough to explain it to someone else.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">02</span><h2>How I Work</h2></div>
+      <div class="principles">
+        <div class="principle">
+          <span class="num">Principle 01</span>
+          <h3>Architecture before code</h3>
+          <p>Every project starts as a plan — modular structure, clear file responsibilities — before a single feature gets built.</p>
+        </div>
+        <div class="principle">
+          <span class="num">Principle 02</span>
+          <h3>Data before assumptions</h3>
+          <p>Preprocessing, feature selection, and parameter tuning come before I trust a model's output.</p>
+        </div>
+        <div class="principle">
+          <span class="num">Principle 03</span>
+          <h3>Iterate, don't guess</h3>
+          <p>I test, measure, and tune rather than assume a first version is the right one.</p>
+        </div>
+        <div class="principle">
+          <span class="num">Principle 04</span>
+          <h3>Understand it, then explain it</h3>
+          <p>If I can't explain a concept simply — like cloud computing in one image and a paragraph — I don't understand it yet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">03</span><h2>Skills</h2></div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h4>ML / AI</h4>
+          <div class="chip-row">
+            <span class="chip">Artificial Neural Networks</span>
+            <span class="chip">Decision Trees (ID3)</span>
+            <span class="chip">Feature Selection</span>
+            <span class="chip">Model Evaluation</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Engineering</h4>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">Streamlit</span>
+            <span class="chip">Git & GitHub</span>
+            <span class="chip">REST APIs</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Cloud & Web</h4>
+          <div class="chip-row">
+            <span class="chip">AWS Fundamentals</span>
+            <span class="chip">Data Analysis</span>
+            <span class="chip">Web Dev Basics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">04</span><h2>Projects</h2></div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <h3>AI Language Translation Tool</h3>
+              <p class="meta">CodeAlpha AI Internship — Task 1</p>
+            </div>
+            <span class="status shipped">Shipped</span>
+          </div>
+          <p class="desc">A Python/Streamlit web app translating across five languages — English, Urdu, Arabic, Simplified Chinese, and Turkish — via a translation API. Modular structure (app.py, translator.py, languages.py, utils.py) with Git/GitHub version control, plus a language-swap toggle, character counter, and translation history.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">NLP</span><span class="tag">Git/GitHub</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <h3>Understanding Cloud Computing — Explainer</h3>
+              <p class="meta">DataCamp Competition Entry</p>
+            </div>
+            <span class="status progress">In progress</span>
+          </div>
+          <p class="desc">A creative image/GIF explaining one benefit of cloud computing in plain terms, paired with a short written explanation — built to make an abstract infrastructure concept concrete.</p>
+          <div class="tag-row">
+            <span class="tag">Cloud Computing</span><span class="tag">Visual Explanation</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <h3>Cooking Website</h3>
+              <p class="meta">Personal project</p>
+            </div>
+            <span class="status todo">Add details</span>
+          </div>
+          <p class="placeholder-note">Tell me what it does, the tech stack, and if there's a live link or repo — I'll write the real description and tags.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <h3>More in the pipeline</h3>
+              <p class="meta">University coursework · other independent projects</p>
+            </div>
+            <span class="status todo">Clarify</span>
+          </div>
+          <p class="placeholder-note">Including whatever "PNR project" refers to — share a few lines on each and they'll get their own cards here.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">05</span><h2>Certifications & Training</h2></div>
+      <div class="cert-list">
+        <div class="cert"><span class="mark">—</span><span class="txt">AIRCERT AWS Certification Bootcamp, Sessions 1 & 2<small>AWS Student Builder Group, Air University Islamabad</small></span></div>
+        <div class="cert"><span class="mark">—</span><span class="txt">Build With Cloud: DevOps & Cloud Engineering<small>AWS Cloud Club, University of Haripur</small></span></div>
+        <div class="cert"><span class="mark">—</span><span class="txt">Working with the OpenAI API / Responses API<small>DataCamp</small></span></div>
+        <div class="cert"><span class="mark">—</span><span class="txt">Introduction to AI for Work · Understanding Cloud Computing<small>DataCamp</small></span></div>
+        <div class="cert"><span class="mark">—</span><span class="txt">AuratTech Fellowship Program<small>AuratTech</small></span></div>
+        <div class="cert"><span class="mark">—</span><span class="txt">Artificial Intelligence for Beginners<small>HP LIFE</small></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="section-head"><span class="section-tag">06</span><h2>Contact</h2></div>
+      <p class="prose">Open to entry-level AI engineering roles and collaborations. The fastest way to reach me is email.</p>
+      <div class="contact-row">
+        <a href="mailto:itooba389@gmail.com">itooba389@gmail.com</a>
+        <a href="https://www.linkedin.com/in/tooba-iqbal-057b8528a" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+      <p class="fine">Islamabad, Pakistan — Built by hand, not a template.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // Reveal cards/sections on scroll — small, purposeful motion only
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.card, .principle').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
